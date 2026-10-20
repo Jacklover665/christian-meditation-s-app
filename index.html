@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6b8f71">
+<meta name="description" content="Sérénité, votre espace personnel de méditation et de respiration.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>Sérénité</title>
+<style>
+:root{--bg:#f4f1ec;--card:#fff;--tx:#2b2a33;--mu:#7a7785;--ac:#6b8f71;--ac2:#e4ede5;--bd:#e3ded6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181a;--card:#1f2427;--tx:#ecebe6;--mu:#98a0a3;--ac:#8fb996;--ac2:#27322b;--bd:#2d3438}}
+:root[data-theme="dark"]{--bg:#15181a;--card:#1f2427;--tx:#ecebe6;--mu:#98a0a3;--ac:#8fb996;--ac2:#27322b;--bd:#2d3438}
+*{box-sizing:border-box}html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+#app{max-width:560px;margin:0 auto;padding:16px 16px 100px}
+h1{font:600 26px Georgia,serif;margin:8px 0 4px}h2{font:600 18px Georgia,serif;margin:20px 0 8px}
+.mu{color:var(--mu);font-size:14px}.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:10px 0}
+button,select,input{font:inherit;color:var(--tx)}
+select,input[type=time],input[type=text]{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:9px 10px;max-width:100%}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:11px 18px;cursor:pointer;font-weight:600}
+.btn.s{background:var(--ac2);color:var(--tx)}.btn.big{width:100%;padding:14px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.tag{background:var(--ac2);border-radius:20px;padding:2px 10px;font-size:12px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{display:flex;max-width:560px;width:100%}nav button{flex:1;background:none;border:0;padding:10px 2px;font-size:11px;color:var(--mu);cursor:pointer}
+nav button b{display:block;font-size:20px;font-weight:400}nav button.on{color:var(--ac);font-weight:700}
+.circle{width:200px;height:200px;border-radius:50%;margin:20px auto;background:radial-gradient(var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:300;color:#fff;transition:transform 4s ease-in-out}
+#run{position:fixed;inset:0;background:var(--bg);z-index:9;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;padding-top:calc(24px + env(safe-area-inset-top,0px))}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;padding:12px 18px;border-radius:12px;z-index:20;display:none;max-width:90%}
+.bars{display:flex;gap:8px;align-items:flex-end;height:110px}.bars div{flex:1;text-align:center;font-size:11px;color:var(--mu)}
+.bars i{display:block;background:var(--ac);border-radius:6px 6px 0 0;min-height:3px;margin-bottom:4px}
+.lbl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+.days button{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:var(--card);cursor:pointer}.days button.on{background:var(--ac);color:#fff}
+#al{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:30;display:none;align-items:center;justify-content:center}#al>div{background:var(--card);padding:24px;border-radius:20px;text-align:center;max-width:320px;width:88%}.mood button{font-size:26px;background:none;border:2px solid transparent;border-radius:12px;cursor:pointer}.mood button.on{border-color:var(--ac);background:var(--ac2)}.pb{height:10px;background:var(--ac2);border-radius:6px;overflow:hidden}.pb i{display:block;height:100%;background:var(--ac)}
+.card{box-shadow:0 2px 12px rgba(0,0,0,.06)}body{background-image:radial-gradient(circle at 85% -5%,var(--ac2),transparent 55%)}
+nav button b{padding:2px 16px;border-radius:14px;display:inline-block}nav button.on b{background:var(--ac2)}
+.hero{background:linear-gradient(135deg,#6b8f71,#4a8fa8 60%,#7a6fb0);color:#fff;border-radius:22px;padding:20px;margin:6px 0 12px;position:relative;overflow:hidden}.hero h1{margin:0 0 6px;color:#fff}.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:#ffffff22}
+.sc{display:flex;gap:12px;align-items:flex-start}.ic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.snd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.snd button{background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:8px 2px;font-size:11px;cursor:pointer}.snd button b{display:block;font-size:22px;font-weight:400}.snd button.on{border-color:var(--ac);background:var(--ac2)}
+.orb{position:relative;width:240px;height:240px;margin:16px auto;display:flex;align-items:center;justify-content:center}.orb svg{position:absolute;inset:0}.orb i{position:absolute;inset:30px;border-radius:50%;background:rgba(255,255,255,.2);animation:pu 6s ease-in-out infinite}.orb i+i{animation-delay:-3s}.ot{width:140px;height:140px;border-radius:50%;background:radial-gradient(#ffffffdd,#ffffff55);display:flex;align-items:center;justify-content:center;color:#2b2a33;font-size:30px;transform:scale(var(--sc,1));transition:transform var(--d,4s) ease-in-out}@keyframes pu{0%,100%{transform:scale(.8);opacity:.9}50%{transform:scale(1.25);opacity:.1}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:380px}.chips button{width:38px;height:38px;border-radius:50%;border:0;background:#ffffff2a;font-size:18px;cursor:pointer}.chips button.on{background:#fff}#run .btn.s{background:#ffffff33;color:#fff}
+.sect{font:600 15px Georgia,serif;margin:22px 4px 6px;color:var(--mu);letter-spacing:.3px}
+.srow{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--bd)}.srow:first-child{border-top:0}
+.si{width:38px;height:38px;border-radius:12px;background:var(--ac2);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.sl{font-size:13px;color:var(--mu);margin-bottom:6px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}.seg button{flex:1;min-width:52px;background:var(--bg);border:2px solid var(--bd);border-radius:12px;padding:9px 4px;cursor:pointer;font-size:13px}.seg button.on{border-color:var(--ac);background:var(--ac2);font-weight:700}.seg.big button b{display:block;font-size:24px;font-weight:400}
+.sw{position:relative;width:50px;height:30px;flex-shrink:0}.sw input{opacity:0;width:0;height:0;position:absolute}.sw span{position:absolute;inset:0;background:var(--bd);border-radius:30px;transition:.25s;cursor:pointer}.sw span:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.25)}.sw input:checked+span{background:var(--ac)}.sw input:checked+span:before{transform:translateX(20px)}
+input[type=range]{accent-color:var(--ac)}
+.av{border-radius:50%;background:#ffffff33;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid #fff;flex-shrink:0;position:relative;z-index:1}.av img{width:100%;height:100%;object-fit:cover}
+.avg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.avg button{font-size:24px;background:var(--bg);border:2px solid var(--bd);border-radius:12px;padding:6px 0;cursor:pointer}.avg button.on{border-color:var(--ac);background:var(--ac2)}
+#toast{background:var(--card);color:var(--tx);border-left:6px solid var(--ac);border-radius:6px 14px 14px 6px;box-shadow:0 12px 30px rgba(0,0,0,.25),inset 0 0 0 1px var(--bd);transform-origin:left center;cursor:pointer;background-image:repeating-linear-gradient(transparent 0 23px,rgba(128,128,128,.07) 23px 24px)}
+#toast.open{animation:bkO .65s cubic-bezier(.2,.8,.2,1) both}#toast.close{animation:bkC .5s ease-in both}
+@keyframes bkO{0%{transform:translateX(-50%) perspective(800px) rotateY(-95deg);opacity:0}60%{opacity:1}100%{transform:translateX(-50%) perspective(800px) rotateY(0);opacity:1}}
+@keyframes bkC{0%{transform:translateX(-50%) perspective(800px) rotateY(0);opacity:1}100%{transform:translateX(-50%) perspective(800px) rotateY(-95deg);opacity:0}}
+#al{perspective:1100px}#al>div{transform-origin:left center;animation:mO .7s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 20px 50px rgba(0,0,0,.4);border-left:8px solid var(--ac)}
+#al.closing{animation:fd .5s ease-in both}#al.closing>div{animation:mC .5s ease-in both}
+@keyframes mO{0%{transform:rotateY(-100deg);opacity:0}50%{opacity:1}100%{transform:rotateY(0);opacity:1}}
+@keyframes mC{0%{transform:rotateY(0);opacity:1}100%{transform:rotateY(-100deg);opacity:0}}
+@keyframes fd{to{background-color:transparent}}
+@media(prefers-reduced-motion:reduce){#toast.open,#toast.close,#al>div,#al.closing>div{animation-duration:.01s}}
+.snd .imp{border:2px dashed var(--bd);border-radius:14px;padding:8px 2px;font-size:11px;text-align:center;cursor:pointer;display:block}.snd .imp b{display:block;font-size:22px;font-weight:400}
+.chips{max-height:92px;overflow-y:auto}
+</style></head><body>
+<div id="toast"></div>
+<div id="al"></div>
+<div id="app"></div>
+<div id="run"></div>
+<nav><div id="nav"></div></nav>
+<script>
+const CATS=["Tous","Stress","Sommeil","Concentration","Gratitude","Respiration","Corps"];
+const SESS=[
+{id:1,t:"Pleine conscience",c:"Concentration",m:[5,10,15,20],g:["Installez-vous confortablement et fermez les yeux.","Portez attention à votre respiration, sans la modifier.","Si l'esprit s'égare, revenez doucement au souffle.","Observez les sensations dans le corps.","Restez simplement présent, ici et maintenant."]},
+{id:2,t:"Apaiser le stress",c:"Stress",m:[5,10,15],g:["Expirez lentement par la bouche.","Relâchez les épaules et la mâchoire.","Imaginez le stress quitter votre corps à chaque expiration.","Laissez les pensées passer comme des nuages.","Sentez le calme s'installer."]},
+{id:3,t:"Endormissement",c:"Sommeil",m:[10,20,30],g:["Allongez-vous, laissez le corps s'alourdir.","Détendez les pieds, les jambes, le ventre.","Relâchez le visage, le front, les yeux.","Laissez venir le sommeil, sans effort.","Il n'y a rien à faire, juste se laisser aller."]},
+{id:4,t:"Scan corporel",c:"Corps",m:[10,15,20],g:["Portez l'attention sur vos pieds.","Remontez vers les jambes et le bassin.","Observez le ventre, la poitrine, le dos.","Détendez les mains, les bras, les épaules.","Terminez par la nuque, le visage et le crâne."]},
+{id:5,t:"Gratitude du jour",c:"Gratitude",m:[5,10],g:["Pensez à quelque chose de simple qui vous a fait du bien.","Ressentez la chaleur de cette reconnaissance.","Pensez à une personne qui compte pour vous.","Remerciez-vous pour vos efforts d'aujourd'hui.","Gardez ce sentiment en vous."]},
+{id:6,t:"Cohérence cardiaque",c:"Respiration",m:[5,10],b:[5,5],g:["Inspirez en gonflant le ventre.","Expirez doucement, sans forcer.","Gardez un rythme régulier et fluide."]},
+{id:7,t:"Respiration 4-7-8",c:"Respiration",m:[5,10],b:[4,7,8],g:["Inspirez 4 s, retenez 7 s, expirez 8 s.","Laissez le rythme apaiser votre système nerveux."]},
+{id:8,t:"Respiration carrée",c:"Respiration",m:[5,10],b:[4,4,4,4],g:["Inspirez, retenez, expirez, retenez : 4 secondes chacun.","Visualisez un carré que vous parcourez."]},
+{id:9,t:"Focus avant travail",c:"Concentration",m:[5,10],g:["Posez votre intention pour la séance de travail à venir.","Ramenez l'attention sur un seul point : le souffle.","Chaque distraction est une occasion de revenir."]},
+{id:10,t:"Bienveillance",c:"Gratitude",m:[10,15],g:["Souhaitez-vous : « Que je sois en paix. »","Étendez ce souhait à un proche.","Puis à une personne neutre, et enfin à tous les êtres."]}];
+const QUOTES=["Le voyage de mille lieues commence par un pas.","Respirez : vous êtes déjà là où il faut être.","Le calme est une force.","Chaque instant est un nouveau départ.","Ce que vous observez perd de son emprise."];
+const SOUNDS=["Aucun","Pluie","Océan","Vent","Bruit blanc","Ruisseau","Feu de camp","Forêt","Nuit étoilée","Orage","Bol tibétain","Drone Om"];
+const DAYS=["L","M","M","J","V","S","D"];
+let S;try{S=JSON.parse(localStorage.getItem("med")||"null")}catch(e){}
+S=Object.assign({log:[],rem:[],fav:[],mood:[],fired:{},set:{theme:"auto",bell:true,interval:0,sound:"Aucun",vol:50,min:10,notif:false}},S||{});
+S.set=Object.assign({theme:"auto",bell:true,interval:0,sound:"Aucun",vol:50,min:10,notif:false},S.set);
+const save=()=>{try{localStorage.setItem("med",JSON.stringify(S))}catch(e){}};
+let tab="home",cat="Tous",dur={},run=null,ac,gain,noise;
+const $=s=>document.querySelector(s);
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+const dkey=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+function theme(){const t=S.set.theme;if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t)}
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",5000)}
+/* Audio */
+function A(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();gain=ac.createGain();gain.connect(ac.destination)}if(ac.state==="suspended")ac.resume();return ac}
+function bell(){if(!S.set.bell)return;try{const c=A(),n=c.currentTime;[528,1056,1584].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.setValueAtTime(.25/(i+1),n);g.gain.exponentialRampToValueAtTime(.001,n+4);o.connect(g);g.connect(c.destination);o.start(n);o.stop(n+4)})}catch(e){}}
+function stopNoise(){try{noise&&noise.stop()}catch(e){}noise=null}
+function startNoise(){stopNoise();const k=S.set.sound;if(k==="Aucun")return;try{const c=A(),len=c.sampleRate*2,b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);let l=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;d[i]=k==="Bruit blanc"?w:(l=(l+.02*w)/1.02)*3.5}
+const s=c.createBufferSource();s.buffer=b;s.loop=true;const f=c.createBiquadFilter();
+if(k==="Pluie"){f.type="highpass";f.frequency.value=1200;}else if(k==="Océan"||k==="Vent"){f.type="lowpass";f.frequency.value=k==="Océan"?500:900;const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=k==="Océan"?.12:.2;lg.gain.value=300;lfo.connect(lg);lg.connect(f.frequency);lfo.start()}else{f.type="allpass"}
+gain.gain.value=S.set.vol/100*.6;s.connect(f);f.connect(gain);s.start();noise=s}catch(e){}}
+/* Rappels */
+let alT,lock,ttl=document.title;
+async function wl(){if(!S.set.keep||!navigator.wakeLock)return;try{if(!lock||lock.released)lock=await navigator.wakeLock.request('screen')}catch(e){}}
+function releaseWl(){try{if(lock){lock.release();lock=null}}catch(e){}}
+function alarm(msg){try{navigator.vibrate&&navigator.vibrate([300,150,300,150,600])}catch(e){}
+const a=$('#al');a.style.display='flex';a.innerHTML=`<div><div style="font-size:40px">🔔</div><h2>${esc(msg)}</h2><p class="mu">Prenez un moment pour vous.</p><button class="btn big" onclick="stopAl();tab='med';render()">Méditer maintenant</button><br><br><button class="btn s big" onclick="snooze(this.dataset.m)" data-m="${esc(msg)}">Reporter de 10 min</button><br><br><button class="mu" style="background:none;border:0" onclick="stopAl()">Fermer</button></div>`;
+let n=0;clearInterval(alT);alT=setInterval(()=>{document.title=n%2?'🔔 Rappel':ttl;if(n%5==0)bell();if(++n>30)stopAl()},1000)}
+function stopAl(){clearInterval(alT);document.title=ttl;$('#al').style.display='none'}
+function snooze(m){stopAl();setTimeout(()=>notify({label:m}),600000);toast('Rappel reporté de 10 min')}
+function setMood(v){const d=dkey(new Date());S.mood=S.mood.filter(x=>x.d!==d);S.mood.push({d,v});save();render()}
+function chk(){const n=new Date(),dk=dkey(n);if(S.fd!==dk){S.fd=dk;S.fired={}}const dow=(n.getDay()+6)%7,cur=n.getHours()*60+n.getMinutes();
+S.rem.forEach(r=>{if(!r.on||!r.d.includes(dow)||S.fired[r.id])return;const p=r.t.split(':'),t=+p[0]*60+ +p[1];if(t>=cur)return;S.fired[r.id]=1;if(cur-t<=480)toast('⏰ Rappel manqué ('+r.t+') : '+(r.label||'méditer'))});save()}
+function notify(r){const msg=r.label||"C'est l'heure de méditer";toast("🧘 "+msg);bell();alarm(msg);if(r.id){S.fired=S.fired||{};S.fired[r.id]=1}try{if(S.set.notif&&"Notification" in window&&Notification.permission==="granted")new Notification("Sérénité",{body:msg})}catch(e){}}
+let fired={};
+setInterval(()=>{const n=new Date(),hm=String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0"),dow=(n.getDay()+6)%7;
+S.rem.forEach(r=>{if(r.on&&r.t===hm&&r.d.includes(dow)){const k=r.id+dkey(n)+hm;if(!fired[k]){fired[k]=1;notify(r)}}})},15000);
+/* Séance */
+function streak(){const set=new Set(S.log.map(l=>l.d));let n=0,d=new Date();if(!set.has(dkey(d)))d.setDate(d.getDate()-1);while(set.has(dkey(d))){n++;d.setDate(d.getDate()-1)}return n}
+function start(id,min){const s=SESS.find(x=>x.id===id);run={s,tot:min*60,end:Date.now()+min*60000,step:-1,paused:false,rest:0,lastI:0};startNoise();bell();wl();$("#run").style.display="flex";tick();run.h=setInterval(tick,500)}
+function tick(){if(!run)return;const r=run;if(r.paused){draw();return}
+const left=Math.max(0,Math.ceil((r.end-Date.now())/1000)),el=r.tot-left;
+if(S.set.interval&&el>0&&Math.floor(el/(S.set.interval*60))>r.lastI){r.lastI=Math.floor(el/(S.set.interval*60));bell()}
+const gs=r.s.g,i=Math.min(gs.length-1,Math.floor(el/r.tot*gs.length));r.msg=gs[i];r.left=left;
+if(r.s.b){const cyc=r.s.b.reduce((a,b)=>a+b,0),p=el%cyc;let a=0,ph=0;for(;ph<r.s.b.length;ph++){if(p<a+r.s.b[ph])break;a+=r.s.b[ph]}
+const names=r.s.b.length===3?["Inspirez","Retenez","Expirez"]:r.s.b.length===4?["Inspirez","Retenez","Expirez","Retenez"]:["Inspirez","Expirez"];
+r.ph=names[ph];r.scale=(r.ph==="Inspirez")?1.25:(r.ph==="Expirez")?.8:r.scale||1;r.dur=r.s.b[ph]}
+if(left<=0)return finish(true);draw()}
+function draw(){const r=run;if(!r)return;const circ=r.s.b?`<div class="circle" style="transform:scale(${r.scale||1});transition-duration:${r.dur||4}s">${r.ph||""}</div>`:`<div class="circle" style="animation:br 8s ease-in-out infinite"></div>`;
+$("#run").innerHTML=`<style>@keyframes br{0%,100%{transform:scale(.85)}50%{transform:scale(1.15)}}</style><div class="mu">${r.s.t}</div>${circ}<div style="font-size:44px;font-weight:200">${fmt(r.left??r.tot)}</div><p style="min-height:50px;max-width:360px">${r.msg||""}</p>
+<div class="row"><button class="btn s" onclick="pause()">${r.paused?"▶ Reprendre":"⏸ Pause"}</button><button class="btn" onclick="finish(false)">Terminer</button></div>`}
+function pause(){const r=run;if(r.paused){r.end=Date.now()+r.rest*1000;r.paused=false;if(S.set.sound!=="Aucun")startNoise()}else{r.rest=Math.max(0,Math.ceil((r.end-Date.now())/1000));r.paused=true;stopNoise()}draw()}
+function finish(done){if(!run)return;clearInterval(run.h);stopNoise();if(!S.set.keep)releaseWl();const el=Math.round((run.tot-(run.paused?run.rest:Math.max(0,Math.ceil((run.end-Date.now())/1000))))/60);
+if(done)bell();const m=done?run.tot/60:el;if(m>=1){S.log.push({d:dkey(new Date()),m:Math.round(m),t:run.s.t});save()}
+run=null;$("#run").dataset.k="";$("#run").style.display="none";toast(done?"Séance terminée, bravo 🌿":"Séance interrompue");render()}
+/* Vues */
+function view(){
+if(tab==="home"){const tot=S.log.reduce((a,l)=>a+l.m,0),today=S.log.filter(l=>l.d===dkey(new Date())).reduce((a,l)=>a+l.m,0),h=new Date().getHours(),g=h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
+const rec=SESS[(new Date().getDate())%SESS.length];
+return `<div class="hero"><div style="position:absolute;right:16px;top:16px;z-index:1;cursor:pointer" onclick="tab='stats';pe=false;render()">${avatar(46)}</div><h1 style="padding-right:56px">${g}${S.prof.name?", "+esc(S.prof.name):""} 🌿</h1><div>${QUOTES[new Date().getDate()%QUOTES.length]}</div></div>
+<div class="card row sp"><div><b style="font-size:26px">${streak()}</b><div class="mu">jours de suite</div></div><div><b style="font-size:26px">${today}</b><div class="mu">min aujourd'hui</div></div><div><b style="font-size:26px">${tot}</b><div class="mu">min au total</div></div></div>
+<div class="card"><div class="row sp"><b>Objectif du jour</b><span class="mu">${today}/${S.set.goal||10} min</span></div><div class="pb" style="margin-top:8px"><i style="width:${Math.min(100,today/(S.set.goal||10)*100)}%"></i></div></div>
+<div class="card"><b>Comment vous sentez-vous ?</b><div class="mood row sp" style="margin-top:8px">${["😞","😕","😐","🙂","😄"].map((e,i)=>`<button class="${(S.mood.find(x=>x.d===dkey(new Date()))||{}).v===i?"on":""}" onclick="setMood(${i})">${e}</button>`).join("")}</div></div>
+<h2>Recommandé aujourd'hui</h2><div class="card item" onclick="start(${rec.id},${rec.m[0]})"><div><b>${rec.t}</b><div class="mu">${rec.c} · ${rec.m[0]} min</div></div><button class="btn">▶</button></div>
+<h2>Ambiance sonore</h2>${sndGrid()}<h2>Méditation rapide</h2><div class="card"><div class="row"><select id="qm">${[1,3,5,10,15,20,30,45,60].map(m=>`<option value="${m}" ${m==S.set.min?"selected":""}>${m} min</option>`).join("")}</select><button class="btn" style="flex:1" onclick="qstart()">Méditer en silence</button></div></div>
+${S.fav.length?`<h2>Favoris</h2>`+S.fav.map(i=>SESS.find(s=>s.id===i)).filter(Boolean).map(card).join(""):""}`}
+if(tab==="med"){const list=SESS.filter(s=>cat==="Tous"||s.c===cat);
+return `<h1>Séances</h1><div class="row"><select onchange="cat=this.value;render()">${CATS.map(c=>`<option ${c===cat?"selected":""}>${c}</option>`).join("")}</select></div>${list.map(card).join("")||'<p class="mu">Aucune séance.</p>'}`}
+if(tab==="rem"){return `<h1>Rappels</h1><div class="mu">Les rappels sonnent tant que l'application est ouverte.</div>
+<div class="card"><div class="row"><input type="time" id="rt" value="08:00"><input type="text" id="rl" placeholder="Libellé (ex. Matin)" style="flex:1;min-width:120px"></div>
+<div class="days row" id="rd" style="margin:10px 0">${DAYS.map((d,i)=>`<button class="on" data-i="${i}" onclick="this.classList.toggle('on')">${d}</button>`).join("")}</div>
+<button class="btn big" onclick="addRem()">Ajouter le rappel</button></div>
+${S.rem.map(r=>`<div class="card row sp"><div><b>${r.t}</b> ${r.label?`· ${esc(r.label)}`:""}<div class="mu">${r.d.length===7?"Tous les jours":r.d.map(i=>DAYS[i]).join(" ")}</div></div><div class="row"><button class="btn s" onclick="togRem(${r.id})">${r.on?"Actif":"Off"}</button><button class="btn s" onclick="delRem(${r.id})">✕</button></div></div>`).join("")||'<p class="mu">Aucun rappel pour l\'instant.</p>'}`}
+if(tab==="stats"){const bars=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const m=S.log.filter(l=>l.d===dkey(d)).reduce((a,l)=>a+l.m,0);bars.push([["D","L","M","M","J","V","S"][d.getDay()],m])}
+const mx=Math.max(10,...bars.map(b=>b[1])),tot=S.log.reduce((a,l)=>a+l.m,0);
+return `<h1>Statistiques</h1><div class="card"><b>7 derniers jours</b><div class="bars" style="margin-top:10px">${bars.map(b=>`<div><i style="height:${b[1]/mx*80}px"></i>${b[0]}<br>${b[1]}</div>`).join("")}</div></div>
+<div class="card row sp"><span>Séances</span><b>${S.log.length}</b></div><div class="card row sp"><span>Temps total</span><b>${tot} min</b></div><div class="card row sp"><span>Série actuelle</span><b>${streak()} j</b></div>
+<h2>Badges</h2><div class="row">${[["🌱","1re séance",S.log.length>=1],["🔥","3 jours de suite",streak()>=3],["🌟","7 jours de suite",streak()>=7],["⏱️","100 minutes",tot>=100],["🏔️","10 heures",tot>=600],["🧘","20 séances",S.log.length>=20]].map(b=>`<span class="tag" style="padding:8px 12px;opacity:${b[2]?1:.35}">${b[0]} ${b[1]}</span>`).join("")}</div>
+<h2>Humeur (7 derniers jours)</h2><div class="card" style="font-size:24px">${S.mood.slice(-7).map(m=>["😞","😕","😐","🙂","😄"][m.v]).join(" ")||'<span class="mu" style="font-size:14px">Aucune donnée</span>'}</div>
+<h2>Historique</h2>${S.log.slice(-8).reverse().map(l=>`<div class="lbl mu"><span>${l.t}</span><span>${l.m} min · ${l.d}</span></div>`).join("")||'<p class="mu">Rien pour le moment.</p>'}`}
+return `<h1>Réglages</h1><div class="card">
+<div class="lbl"><span>Thème</span><select onchange="S.set.theme=this.value;save();theme()">${[["auto","Automatique"],["light","Clair"],["dark","Sombre"]].map(o=>`<option value="${o[0]}" ${S.set.theme===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
+<div class="lbl"><span>Durée par défaut</span><select onchange="S.set.min=+this.value;save()">${[5,10,15,20,30].map(m=>`<option ${m==S.set.min?"selected":""} value="${m}">${m} min</option>`).join("")}</select></div>
+<div class="lbl"><span>Objectif quotidien</span><select onchange="S.set.goal=+this.value;save()">${[5,10,15,20,30].map(m=>`<option value="${m}" ${(S.set.goal||10)===m?"selected":""}>${m} min</option>`).join("")}</select></div>
+<div class="lbl"><span>Garder l'écran allumé</span><input type="checkbox" ${S.set.keep?"checked":""} onchange="S.set.keep=this.checked;save();if(this.checked)wl();else releaseWl()"></div>
+<div class="lbl"><span>Tester un rappel</span><button class="btn s" onclick="notify({label:'Test de rappel'})">Tester</button></div>
+<div class="lbl"><span>Notifications système</span><button class="btn s" onclick="window.open(location.href,'_blank')">Nouvel onglet</button></div>
+<div class="lbl"><span>Son d'ambiance</span><select onchange="pick(this.value)">${SOUNDS.map(s=>`<option ${s===S.set.sound?"selected":""}>${s}</option>`).join("")}</select></div>
+<div class="lbl"><span>Volume ambiance</span><input type="range" min="0" max="100" value="${S.set.vol}" oninput="S.set.vol=+this.value;save();if(gain)gain.gain.value=S.set.vol/100*.6"></div>
+<div class="lbl"><span>Cloche début / fin</span><input type="checkbox" ${S.set.bell?"checked":""} onchange="S.set.bell=this.checked;save()"></div>
+<div class="lbl"><span>Cloche d'intervalle</span><select onchange="S.set.interval=+this.value;save()">${[[0,"Aucune"],[1,"Toutes les 1 min"],[5,"Toutes les 5 min"],[10,"Toutes les 10 min"]].map(o=>`<option value="${o[0]}" ${S.set.interval===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
+<div class="lbl"><span>Notifications système</span><input type="checkbox" ${S.set.notif?"checked":""} onchange="notifPerm(this)"></div></div>
+<button class="btn s big" onclick="if(confirm('Effacer toutes les données ?')){S.log=[];S.rem=[];S.fav=[];save();render()}">Réinitialiser mes données</button>`}
+function card(s){const d=dur[s.id]||s.m.find(m=>m>=S.set.min)||s.m[0],f=S.fav.includes(s.id);
+return `<div class="card"><div class="row sp"><div><b>${s.t}</b> <span class="tag">${s.c}</span></div><button class="btn s" onclick="fav(${s.id})">${f?"★":"☆"}</button></div>
+<div class="row" style="margin-top:10px"><select onchange="dur[${s.id}]=+this.value">${s.m.map(m=>`<option value="${m}" ${m===d?"selected":""}>${m} min</option>`).join("")}</select><button class="btn" style="flex:1" onclick="start(${s.id},dur[${s.id}]||${d})">▶ Commencer</button></div></div>`}
+function render(){$("#app").innerHTML=view();$("#nav").innerHTML=[["home","🏠","Accueil"],["med","🧘","Séances"],["rem","⏰","Rappels"],["stats","📊","Stats"],["set","⚙️","Réglages"]].map(t=>`<button class="${tab===t[0]?"on":""}" onclick="tab='${t[0]}';render()"><b>${t[1]}</b>${t[2]}</button>`).join("")}
+function view_(){}
+function qstart(){const m=+$("#qm").value;start(0,m)}
+function fav(id){S.fav=S.fav.includes(id)?S.fav.filter(x=>x!==id):[...S.fav,id];save();render()}
+function addRem(){const t=$("#rt").value;if(!t)return;const d=[...document.querySelectorAll("#rd .on")].map(b=>+b.dataset.i);if(!d.length)return toast("Choisissez au moins un jour");S.rem.push({id:Date.now(),t,label:$("#rl").value.trim(),d,on:true});S.rem.sort((a,b)=>a.t.localeCompare(b.t));save();render();toast("Rappel ajouté")}
+function togRem(id){const r=S.rem.find(x=>x.id===id);r.on=!r.on;save();render()}
+function delRem(id){S.rem=S.rem.filter(x=>x.id!==id);save();render()}
+function notifPerm(el){if(!el.checked){S.set.notif=false;save();return}try{Notification.requestPermission().then(p=>{S.set.notif=p==="granted";if(p!=="granted"){el.checked=false;toast("Notifications refusées ou indisponibles ici")}save()})}catch(e){el.checked=false;toast("Notifications indisponibles ici")}}
+SESS.push({id:11,t:"Réveil en douceur",c:"Concentration",m:[5,10],g:["Étirez-vous doucement.","Prenez trois grandes respirations.","Choisissez une intention pour la journée.","Souriez légèrement et ouvrez les yeux."]},{id:12,t:"Lâcher prise",c:"Stress",m:[10,15,20],g:["Notez les tensions que vous portez.","Imaginez les déposer devant vous.","Laissez partir ce qui ne dépend pas de vous.","Revenez à la douceur du souffle."]},{id:13,t:"Sommeil profond",c:"Sommeil",m:[20,30,45],g:["Sentez le poids du corps sur le lit.","Comptez vos expirations de 10 à 1.","Laissez les images se dissoudre.","Glissez doucement vers le sommeil."]},{id:14,t:"Marche méditative",c:"Corps",m:[10,15,20],g:["Marchez lentement, sentez chaque appui du pied.","Synchronisez le pas et le souffle.","Observez les sons autour de vous.","Gardez le regard doux, sans but."]});
+SESS.push({id:0,t:"Méditation silencieuse",c:"Concentration",m:[1],g:["Restez simplement présent."]});
+/* ===== Sons variés, visuels ===== */
+const SI={"Aucun":"🔇","Pluie":"🌧️","Océan":"🌊","Vent":"🍃","Bruit blanc":"📻","Ruisseau":"💧","Feu de camp":"🔥","Forêt":"🌲","Nuit étoilée":"🌙","Orage":"⛈️","Bol tibétain":"🔔","Drone Om":"🕉️"};
+const GR={Stress:"linear-gradient(160deg,#5b7fa6,#8e6fa8)",Sommeil:"linear-gradient(160deg,#1d2b4f,#4b3a7a)",Concentration:"linear-gradient(160deg,#3f7d6b,#2f5f7a)",Gratitude:"linear-gradient(160deg,#d98a6a,#c25f7a)",Respiration:"linear-gradient(160deg,#4a9bb0,#4f7fc4)",Corps:"linear-gradient(160deg,#6d8f4e,#3f7f5f)"};
+const CI={Stress:"🌊",Sommeil:"🌙",Concentration:"🎯",Gratitude:"💛",Respiration:"🍃",Corps:"🧍"};
+let fx=[],pv;
+function stopNoise(){fx.forEach(f=>{try{f()}catch(e){}});fx=[];noise=null}
+function startNoise(){stopNoise();const k=S.set.sound;if(k==="Aucun")return;try{const c=A();gain.gain.value=S.set.vol/100*.6;
+const mk=b=>{const n=c.sampleRate*2,u=c.createBuffer(1,n,c.sampleRate),d=u.getChannelData(0);let l=0;for(let i=0;i<n;i++){const w=Math.random()*2-1;d[i]=b?(l=(l+.02*w)/1.02)*3.5:w}const s=c.createBufferSource();s.buffer=u;s.loop=true;return s};
+const bed=(b,t,f,q)=>{const s=mk(b),n=c.createBiquadFilter();n.type=t;n.frequency.value=f;if(q)n.Q.value=q;s.connect(n);n.connect(gain);s.start();fx.push(()=>s.stop());return n};
+const lfo=(f,a,t)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=a;o.connect(g);g.connect(t);o.start();fx.push(()=>o.stop())};
+const loop=(fn,ms)=>{const id=setInterval(fn,ms);fx.push(()=>clearInterval(id))};
+const tone=(f1,f2,d,v,ty)=>{const o=c.createOscillator(),g=c.createGain(),n=c.currentTime;o.type=ty||"sine";o.frequency.setValueAtTime(f1,n);o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(v,n+d*.2);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(gain);o.start(n);o.stop(n+d+.05)};
+const R=Math.random;let n;
+if(k==="Pluie")bed(0,"highpass",1200);
+else if(k==="Océan"){n=bed(1,"lowpass",500);lfo(.12,300,n.frequency)}
+else if(k==="Vent"){n=bed(1,"lowpass",900);lfo(.2,300,n.frequency)}
+else if(k==="Bruit blanc")bed(0,"allpass",1000);
+else if(k==="Ruisseau"){n=bed(0,"bandpass",1400,1.5);lfo(7,500,n.frequency);lfo(11,300,n.frequency)}
+else if(k==="Feu de camp"){bed(1,"lowpass",400);loop(()=>{if(R()<.7)tone(2000+R()*3000,200,.04,.5,"sawtooth")},230)}
+else if(k==="Forêt"){n=bed(1,"lowpass",600);lfo(.1,200,n.frequency);loop(()=>{if(R()<.6){const f=2200+R()*2000;tone(f,f*1.3,.15,.5);setTimeout(()=>tone(f*1.2,f*.9,.12,.4),180)}},1800)}
+else if(k==="Nuit étoilée"){bed(1,"lowpass",300);loop(()=>{for(let i=0;i<3;i++)setTimeout(()=>tone(4200,4300,.06,.3),i*90)},700)}
+else if(k==="Orage"){bed(0,"highpass",1000);loop(()=>{if(R()<.5)tone(80,30,4,1.4,"triangle")},7000)}
+else if(k==="Bol tibétain"){const b=()=>[196,392,588].forEach((f,i)=>tone(f,f*.998,10,.9/(i+1)));b();loop(b,11000)}
+else if(k==="Drone Om"){[136.1,204.15,272.2].forEach(f=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=.4;o.connect(g);g.connect(gain);lfo(.1,.15,g.gain);o.start();fx.push(()=>o.stop())})}
+}catch(e){}}
+function swSnd(s){S.set.sound=s;save();if(run&&!run.paused)startNoise();$("#run").dataset.k=""}
+function pick(s){if(run)return swSnd(s);S.set.sound=s;save();clearTimeout(pv);if(s==="Aucun")stopNoise();else{startNoise();pv=setTimeout(()=>{if(!run)stopNoise()},12000)}render()}
+function sndGrid(){return `<div class="snd">${SOUNDS.map(s=>`<button class="${s===S.set.sound?"on":""}" onclick="pick('${s}')"><b>${SI[s]}</b>${s}</button>`).join("")}</div>`}
+function card(s){const d=dur[s.id]||s.m.find(m=>m>=S.set.min)||s.m[0],f=S.fav.includes(s.id);
+return `<div class="card sc"><div class="ic" style="background:${GR[s.c]}">${CI[s.c]}</div><div style="flex:1;min-width:0"><div class="row sp"><b>${s.t}</b><button class="btn s" style="padding:4px 10px" onclick="fav(${s.id})">${f?"★":"☆"}</button></div><span class="tag">${s.c}</span><div class="row" style="margin-top:8px"><select onchange="dur[${s.id}]=+this.value">${s.m.map(m=>`<option value="${m}" ${m===d?"selected":""}>${m} min</option>`).join("")}</select><button class="btn" style="flex:1" onclick="start(${s.id},dur[${s.id}]||${d})">▶ Commencer</button></div></div></div>`}
+function draw(){const r=run;if(!r)return;const R=$("#run"),key=r.s.id+"|"+r.paused+"|"+S.set.sound;
+if(R.dataset.k!==key){R.dataset.k=key;R.style.background=GR[r.s.c]||GR.Concentration;
+R.innerHTML=`<div style="color:#fffc">${CI[r.s.c]||"🧘"} ${r.s.t}</div><div class="orb"><i></i><i></i><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="#fff3" stroke-width="4"/><circle id="pr" cx="60" cy="60" r="54" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="339.3" transform="rotate(-90 60 60)"/></svg><div id="ot" class="ot"></div></div><div id="rt" style="font-size:44px;font-weight:200;color:#fff">00:00</div><p id="rm" style="min-height:56px;max-width:360px;color:#fffe"></p><div class="chips">${SOUNDS.map(s=>`<button class="${s===S.set.sound?"on":""}" title="${s}" onclick="swSnd('${s}')">${SI[s]}</button>`).join("")}</div><div class="row" style="justify-content:center;margin-top:14px"><button class="btn s" onclick="pause()">${r.paused?"▶ Reprendre":"⏸ Pause"}</button><button class="btn" onclick="finish(false)">Terminer</button></div>`}
+const left=r.left??r.tot,ot=$("#ot");$("#rt").textContent=fmt(left);$("#rm").textContent=r.msg||"";$("#pr").style.strokeDashoffset=339.3*(1-(r.tot-left)/r.tot);ot.textContent=r.ph||CI[r.s.c]||"🧘";ot.style.setProperty("--sc",r.s.b?(r.scale||1):1);ot.style.setProperty("--d",(r.dur||4)+"s")}
+
+/* ===== Réglages stylisés ===== */
+const srow=(ic,t,sub,ctl)=>`<div class="srow"><div class="si">${ic}</div><div style="flex:1;min-width:0"><div>${t}</div>${sub?`<div class="mu" style="font-size:12px">${sub}</div>`:""}</div>${ctl||""}</div>`;
+const tog=(on,fn)=>`<label class="sw"><input type="checkbox" ${on?"checked":""} onchange="${fn}"><span></span></label>`;
+const chips=(k,arr,u)=>`<div class="seg">${arr.map(v=>`<button class="${(S.set[k]||(k==="goal"?10:0))===v?"on":""}" onclick="setv('${k}',${v})">${v}${u}</button>`).join("")}</div>`;
+function setv(k,v){S.set[k]=v;save();if(k==="theme")theme();render()}
+function setView(){const tot=S.log.reduce((a,l)=>a+l.m,0),th=S.set.theme;
+return `<div class="hero"><h1>Réglages ⚙️</h1><div>Créez un espace qui vous ressemble</div><div style="margin-top:10px;font-size:13px;opacity:.9">🌿 ${S.log.length} séances · ${tot} min · série de ${streak()} j</div></div>
+<div class="sect">🎨 Apparence</div><div class="card"><div class="seg big">${[["light","☀️","Clair"],["dark","🌙","Sombre"],["auto","✨","Auto"]].map(o=>`<button class="${th===o[0]?"on":""}" onclick="setv('theme','${o[0]}')"><b>${o[1]}</b>${o[2]}</button>`).join("")}</div></div>
+<div class="sect">🧘 Ma pratique</div><div class="card">
+<div class="sl">Durée par défaut</div>${chips("min",[5,10,15,20,30]," min")}
+<div class="sl" style="margin-top:14px">Objectif quotidien</div>${chips("goal",[5,10,15,20,30]," min")}
+<div class="sl" style="margin-top:14px">Cloche d'intervalle</div><select onchange="setv('interval',+this.value)" style="width:100%">${[[0,"Aucune"],[1,"Toutes les minutes"],[5,"Toutes les 5 minutes"],[10,"Toutes les 10 minutes"]].map(o=>`<option value="${o[0]}" ${S.set.interval===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
+<div class="sect">🔊 Sons</div><div class="card">${sndGrid()}
+<div class="sl" style="margin-top:14px">Volume de l'ambiance</div><div class="row"><span>🔈</span><input type="range" min="0" max="100" value="${S.set.vol}" style="flex:1" oninput="S.set.vol=+this.value;save();if(gain)gain.gain.value=S.set.vol/100*.6"><span>🔊</span></div>
+<div style="margin-top:8px">${srow("🔔","Cloche de début et de fin","Un son doux pour ouvrir et fermer la séance",tog(S.set.bell,"S.set.bell=this.checked;save()"))}${srow("📖","Sons des pages","Bruit de livre qui s'ouvre et se ferme",tog(S.set.psnd!==false,"S.set.psnd=this.checked;save()"))}</div></div>
+<div class="sect">⏰ Rappels</div><div class="card">
+${srow("📲","Notifications du système","Si votre navigateur les autorise",tog(S.set.notif,"notifPerm(this)"))}
+${srow("💡","Garder l'écran allumé","Pour ne pas manquer un rappel",tog(S.set.keep,"S.set.keep=this.checked;save();if(this.checked)wl();else releaseWl()"))}
+${srow("🧪","Tester un rappel","Aperçu de l'alarme",'<button class="btn s" onclick="notify({label:\'Test de rappel\'})">Tester</button>')}
+${srow("🪟","Ouvrir en pleine page","Meilleur pour les notifications",'<button class="btn s" onclick="window.open(location.href,\'_blank\')">Ouvrir</button>')}</div>
+<div class="sect">🗂️ Mes données</div><div class="card">${srow("🧹","Réinitialiser","Efface séances, rappels, humeurs et favoris",'<button class="btn s" onclick="if(confirm(\'Effacer toutes les données ?\')){S.log=[];S.rem=[];S.fav=[];S.mood=[];save();render()}">Effacer</button>')}</div>
+<p class="mu" style="text-align:center;margin:22px 0">Fait avec 🌿 pour votre calme intérieur</p>`}
+const _v=view;view=function(){return tab==="set"?setView():_v()};
+
+/* ===== Profil utilisateur ===== */
+S.prof=Object.assign({name:"",av:"🧘",img:"",since:Date.now()},S.prof||{});save();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let pe=false;
+function avatar(z){const p=S.prof;return `<div class="av" style="width:${z}px;height:${z}px;font-size:${Math.round(z*.5)}px">${p.av==="img"&&p.img?`<img src="${p.img}" alt="">`:p.av}</div>`}
+function upImg(el){const f=el.files[0];if(!f)return;if(!f.type.startsWith("image/"))return toast("Choisissez une image");const r=new FileReader();r.onerror=()=>toast("Image illisible");r.onload=()=>{const im=new Image();im.onerror=()=>toast("Image illisible");im.onload=()=>{const c=document.createElement("canvas"),s=Math.min(im.width,im.height),z=240;c.width=c.height=z;c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,z,z);S.prof.img=c.toDataURL("image/jpeg",.85);S.prof.av="img";save();render();toast("Photo mise à jour 📷")};im.src=r.result};r.readAsDataURL(f)}
+function profileCard(){const p=S.prof,tot=S.log.reduce((a,l)=>a+l.m,0),th=[0,60,300,1000],nm=[["🌱","Débutant"],["🌿","Apprenti"],["🌳","Pratiquant"],["🏔️","Sage"]],i=th.filter(x=>tot>=x).length-1,nx=th[i+1],pct=nx?Math.min(100,(tot-th[i])/(nx-th[i])*100):100;
+return `<div class="hero" style="display:flex;gap:14px;align-items:center">${avatar(78)}<div style="flex:1;min-width:0;position:relative;z-index:1"><div style="font:600 22px Georgia,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.name||"Votre nom")}</div><div style="font-size:13px;opacity:.9">${nm[i][0]} ${nm[i][1]} · depuis ${new Date(p.since).toLocaleDateString("fr-FR",{month:"long",year:"numeric"})}</div><div class="pb" style="margin-top:8px;background:#ffffff44"><i style="width:${pct}%;background:#fff"></i></div><div style="font-size:12px;opacity:.85;margin-top:4px">${nx?(nx-tot)+" min avant « "+nm[i+1][1]+" »":"Niveau maximal atteint 🎉"}</div></div></div>
+<div class="row" style="margin-bottom:6px"><button class="btn s" onclick="pe=!pe;render()">${pe?"Fermer":"✏️ Modifier mon profil"}</button></div>
+${pe?`<div class="card"><div class="sl">Nom</div><input type="text" value="${esc(p.name)}" maxlength="24" placeholder="Votre prénom" style="width:100%" oninput="S.prof.name=this.value;save()">
+<div class="sl" style="margin-top:14px">Photo de profil</div><div class="avg">${["🧘","🌿","🌸","🦋","🐚","🌙","☀️","🦉","🐢","🕊️","🌊","🪷"].map(e=>`<button class="${p.av===e?"on":""}" onclick="S.prof.av='${e}';save();render()">${e}</button>`).join("")}</div>
+<div class="row" style="margin-top:12px"><label class="btn s" style="cursor:pointer">📷 Importer ma photo<input type="file" accept="image/*" hidden onchange="upImg(this)"></label>${p.img?'<button class="btn s" onclick="S.prof.img=\'\';if(S.prof.av===\'img\')S.prof.av=\'🧘\';save();render()">Retirer</button>':""}${p.img&&p.av!=="img"?'<button class="btn s" onclick="S.prof.av=\'img\';save();render()">Utiliser ma photo</button>':""}</div>
+<p class="mu" style="font-size:12px;margin:10px 0 0">Votre photo reste sur cet appareil.</p></div>`:""}`}
+const _v2=view;view=function(){return tab==="stats"?profileCard()+_v2():_v2()};
+
+/* ===== Notifications "livre" ===== */
+let tT;
+function pageSnd(open){if(S.set.psnd===false)return;try{const c=A(),n=c.currentTime,len=Math.floor(c.sampleRate*.5),b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+const s=c.createBufferSource();s.buffer=b;const f=c.createBiquadFilter();f.type="bandpass";f.Q.value=.9;const g=c.createGain(),du=open?.45:.3;
+f.frequency.setValueAtTime(open?900:3000,n);f.frequency.exponentialRampToValueAtTime(open?3200:700,n+du);
+g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(open?.5:.4,n+du*.35);g.gain.exponentialRampToValueAtTime(.0001,n+du);
+s.connect(f);f.connect(g);g.connect(c.destination);s.start(n);s.stop(n+du+.05);
+if(!open){const t0=n+du*.7,o=c.createOscillator(),og=c.createGain();o.frequency.setValueAtTime(120,t0);o.frequency.exponentialRampToValueAtTime(55,t0+.15);og.gain.setValueAtTime(.0001,t0);og.gain.linearRampToValueAtTime(.35,t0+.01);og.gain.exponentialRampToValueAtTime(.0001,t0+.18);o.connect(og);og.connect(c.destination);o.start(t0);o.stop(t0+.2)}
+}catch(e){}}
+function closeToast(){const t=$("#toast");if(t.style.display!=="block"||t.className==="close")return;clearTimeout(tT);t.className="close";pageSnd(false);setTimeout(()=>{if(t.className==="close"){t.style.display="none";t.className=""}},520)}
+function toast(m){const t=$("#toast");clearTimeout(tT);t.textContent=m;t.style.display="block";t.className="";void t.offsetWidth;t.className="open";t.onclick=closeToast;pageSnd(true);tT=setTimeout(closeToast,4500)}
+function stopAl(){clearInterval(alT);document.title=ttl;const a=$("#al");if(a.style.display!=="flex"||a.className==="closing")return;a.className="closing";pageSnd(false);setTimeout(()=>{a.style.display="none";a.className=""},520)}
+const _al=alarm;alarm=function(m){$("#al").className="";_al(m);pageSnd(true)};
+document.addEventListener("pointerdown",()=>{try{A()}catch(e){}},{once:true});
+
+/* ===== Sons apaisants : fondus, aigus adoucis, cloche douce ===== */
+let mg;
+function stopNoise(){const old=fx,m=mg;fx=[];noise=null;mg=null;if(m){try{const t=ac.currentTime;m.gain.cancelScheduledValues(t);m.gain.setValueAtTime(m.gain.value,t);m.gain.linearRampToValueAtTime(0,t+1)}catch(e){}}setTimeout(()=>old.forEach(f=>{try{f()}catch(e){}}),1100)}
+function bell(){if(!S.set.bell)return;try{const c=A(),n=c.currentTime;[[261.6,.2,8],[262.4,.12,8],[392.4,.08,6],[523.3,.04,5],[784,.015,3]].forEach(p=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=p[0];g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(p[1],n+.1);g.gain.exponentialRampToValueAtTime(.0001,n+p[2]);o.connect(g);g.connect(c.destination);o.start(n);o.stop(n+p[2]+.1)})}catch(e){}}
+function startNoise(){stopNoise();const k=S.set.sound;if(k==="Aucun")return;try{const c=A();gain.gain.value=S.set.vol/100*.6;
+const M=mg=c.createGain(),lp=c.createBiquadFilter();M.gain.setValueAtTime(0,c.currentTime);M.gain.linearRampToValueAtTime(1,c.currentTime+3);lp.type="lowpass";lp.frequency.value=2600;lp.Q.value=.4;M.connect(lp);lp.connect(gain);
+const mk=b=>{const n=c.sampleRate*3,u=c.createBuffer(1,n,c.sampleRate),d=u.getChannelData(0);let l=0;for(let i=0;i<n;i++){const w=Math.random()*2-1;d[i]=b?(l=(l+.02*w)/1.02)*3.5:w*.6}const s=c.createBufferSource();s.buffer=u;s.loop=true;return s};
+const bed=(b,t,f,q,v)=>{const s=mk(b),n=c.createBiquadFilter(),g=c.createGain();n.type=t;n.frequency.value=f;if(q)n.Q.value=q;g.gain.value=v||1;s.connect(n);n.connect(g);g.connect(M);s.start();fx.push(()=>s.stop());n.g=g;return n};
+const lfo=(f,a,t)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=a;o.connect(g);g.connect(t);o.start();fx.push(()=>o.stop())};
+const loop=(fn,ms)=>{const id=setInterval(fn,ms);fx.push(()=>clearInterval(id))};
+const tone=(f1,f2,d,v,ty)=>{const o=c.createOscillator(),g=c.createGain(),n=c.currentTime;o.type=ty||"sine";o.frequency.setValueAtTime(f1,n);o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(v,n+d*.3);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(M);o.start(n);o.stop(n+d+.05)};
+const R=Math.random;let n;
+if(k==="Pluie"){bed(0,"bandpass",900,.35,.7);loop(()=>{if(R()<.35)tone(900+R()*700,1300+R()*600,.09,.05)},130)}
+else if(k==="Océan"){n=bed(1,"lowpass",450,0,.7);lfo(.08,220,n.frequency);lfo(.09,.28,n.g.gain)}
+else if(k==="Vent"){n=bed(1,"lowpass",650,0,.7);lfo(.1,180,n.frequency);lfo(.07,.22,n.g.gain)}
+else if(k==="Bruit blanc")bed(1,"lowpass",1600,.3,.8);
+else if(k==="Ruisseau"){n=bed(0,"bandpass",900,.8,.55);lfo(5,220,n.frequency);lfo(8,140,n.frequency);loop(()=>{if(R()<.5)tone(450+R()*450,800+R()*500,.12,.05)},140)}
+else if(k==="Feu de camp"){bed(1,"lowpass",350,.5,1);loop(()=>{if(R()<.35)tone(900+R()*1200,300,.06,.1,"triangle")},300)}
+else if(k==="Forêt"){n=bed(1,"lowpass",500,0,.7);lfo(.1,150,n.frequency);loop(()=>{if(R()<.5){const f=1700+R()*700;tone(f,f*1.2,.28,.1);setTimeout(()=>tone(f*1.1,f*.9,.22,.08),320)}},3500)}
+else if(k==="Nuit étoilée"){bed(1,"lowpass",260,0,.9);loop(()=>{for(let i=0;i<2;i++)setTimeout(()=>tone(2900,2950,.12,.07),i*220)},1500)}
+else if(k==="Orage"){bed(0,"bandpass",800,.35,.6);bed(1,"lowpass",200,0,.8);loop(()=>{if(R()<.35)tone(60,35,7,.25,"triangle")},12000)}
+else if(k==="Bol tibétain"){const b=()=>[220,330,440].forEach((f,i)=>tone(f,f*.998,11,.3/(i+1)));b();loop(b,14000)}
+else if(k==="Drone Om"){[136.1,204.15,272.2].forEach(f=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=.2;o.connect(g);g.connect(M);lfo(.08,.07,g.gain);o.start();fx.push(()=>o.stop())})}
+}catch(e){}}
+
+/* ===== Nouveaux sons + import de fichiers audio ===== */
+function mkH(c,M){const R=Math.random;
+const mk=b=>{const n=c.sampleRate*3,u=c.createBuffer(1,n,c.sampleRate),d=u.getChannelData(0);let l=0;for(let i=0;i<n;i++){const w=Math.random()*2-1;d[i]=b?(l=(l+.02*w)/1.02)*3.5:w*.6}const s=c.createBufferSource();s.buffer=u;s.loop=true;return s};
+const bed=(b,t,f,q,v)=>{const s=mk(b),n=c.createBiquadFilter(),g=c.createGain();n.type=t;n.frequency.value=f;if(q)n.Q.value=q;g.gain.value=v||1;s.connect(n);n.connect(g);g.connect(M);s.start();fx.push(()=>s.stop());n.g=g;return n};
+const lfo=(f,a,t)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.value=a;o.connect(g);g.connect(t);o.start();fx.push(()=>o.stop())};
+const loop=(fn,ms)=>{const id=setInterval(fn,ms);fx.push(()=>clearInterval(id))};
+const tone=(f1,f2,d,v,ty)=>{const o=c.createOscillator(),g=c.createGain(),n=c.currentTime;o.type=ty||"sine";o.frequency.setValueAtTime(f1,n);o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(v,n+d*.3);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(M);o.start(n);o.stop(n+d+.05)};
+return{bed,lfo,loop,tone,R,c,M}}
+const bin=d=>h=>{[[200,-1],[200+d,1]].forEach(p=>{const o=h.c.createOscillator(),g=h.c.createGain(),pn=h.c.createStereoPanner();o.frequency.value=p[0];g.gain.value=.25;pn.pan.value=p[1];o.connect(g);g.connect(pn);pn.connect(h.M);o.start();fx.push(()=>o.stop())});h.bed(1,"lowpass",300,0,.2)};
+const NEWS={
+"Carillons":h=>{h.loop(()=>{if(h.R()<.7){const f=[392,440,523,587,659,784][Math.floor(h.R()*6)];h.tone(f,f*.999,5,.12)}},2200)},
+"Cascade":h=>{h.bed(0,"bandpass",700,.3,.6);h.bed(1,"lowpass",250,0,.9)},
+"Toit sous la pluie":h=>{h.bed(0,"bandpass",1500,.5,.4);h.loop(()=>{if(h.R()<.4)h.tone(260+h.R()*120,180,.07,.07,"triangle")},90)},
+"Galets":h=>{const n=h.bed(1,"lowpass",450,0,.6);h.lfo(.1,.25,n.g.gain);h.loop(()=>{if(h.R()<.45)h.tone(1100+h.R()*700,400,.04,.05,"triangle")},70)},
+"Bruit brun":h=>h.bed(1,"lowpass",300,0,1.2),
+"Battement de cœur":h=>h.loop(()=>{h.tone(70,45,.2,.5);setTimeout(()=>h.tone(60,40,.18,.35),300)},1100),
+"Chants de baleine":h=>{h.bed(1,"lowpass",300,0,.5);const w=()=>{h.tone(220,420,3.5,.15);setTimeout(()=>h.tone(420,260,4,.12),2800)};w();h.loop(()=>{if(h.R()<.7)w()},13000)},
+"Ventilateur":h=>{h.bed(1,"lowpass",900,.2,.6);h.bed(0,"bandpass",400,.5,.2)},
+"Binaural Alpha":bin(10),"Binaural Thêta":bin(6)};
+const NI={"Carillons":"🎐","Cascade":"🏞️","Toit sous la pluie":"🏠","Galets":"🪨","Bruit brun":"🟤","Battement de cœur":"💓","Chants de baleine":"🐋","Ventilateur":"🌀","Binaural Alpha":"🎧","Binaural Thêta":"🎧"};
+if(S.set.sound==="Grenouilles"){S.set.sound="Aucun";save()}
+Object.keys(NEWS).forEach(k=>{SOUNDS.push(k);SI[k]=NI[k]});
+S.custom=S.custom||[];S.custom.forEach(n=>{SOUNDS.push(n);SI[n]="📁"});
+/* IndexedDB */
+const idb=()=>new Promise((ok,ko)=>{const r=indexedDB.open("serenite",1);r.onupgradeneeded=()=>r.result.createObjectStore("s");r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)});
+const idbDo=(m,k,v)=>idb().then(d=>new Promise((ok,ko)=>{const t=d.transaction("s",m==="get"?"readonly":"readwrite"),s=t.objectStore("s"),q=m==="get"?s.get(k):m==="put"?s.put(v,k):s.delete(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>ko(q.error)}));
+function impSnd(el){const f=el.files[0];if(!f)return;if(!f.type.startsWith("audio/"))return toast("Choisissez un fichier audio");if(f.size>25e6)return toast("Fichier trop lourd (25 Mo max)");
+let n="📁 "+f.name.replace(/\.[^.]+$/,"").replace(/['"<>&\\]/g,"").slice(0,16);if(SOUNDS.includes(n))n+=" 2";
+idbDo("put",n,f).then(()=>{S.custom.push(n);SOUNDS.push(n);SI[n]="📁";save();pick(n);toast("Son ajouté 🎶")}).catch(()=>toast("Impossible d'enregistrer ce son ici"))}
+function delSnd(i){const n=S.custom[i];S.custom.splice(i,1);SOUNDS.splice(SOUNDS.indexOf(n),1);idbDo("del",n).catch(()=>{});if(S.set.sound===n){S.set.sound="Aucun";stopNoise()}save();render()}
+function sndGrid(){return `<div class="snd">${SOUNDS.map(s=>`<button class="${s===S.set.sound?"on":""}" onclick="pick('${s}')"><b>${SI[s]}</b>${s.replace("📁 ","")}</button>`).join("")}<label class="imp"><b>➕</b>Importer<input type="file" accept="audio/*" hidden onchange="impSnd(this)"></label></div>${S.custom.length?`<div class="mu" style="margin-top:8px;font-size:12px">Mes sons : ${S.custom.map((n,i)=>`<span class="tag">${esc(n.replace("📁 ",""))} <a onclick="delSnd(${i})" style="cursor:pointer">✕</a></span>`).join(" ")}</div>`:""}<div class="mu" style="font-size:11px;margin-top:6px">🎧 Les sons binauraux s'écoutent au casque.</div>`}
+function fadeMaster(c,t){const lp=c.createBiquadFilter(),M=mg=c.createGain();M.gain.setValueAtTime(0,c.currentTime);M.gain.linearRampToValueAtTime(t,c.currentTime+3);return M}
+const _sn=startNoise;
+startNoise=function(){const k=S.set.sound;if(!NEWS[k]&&k.slice(0,2)!=="📁")return _sn();stopNoise();try{const c=A();gain.gain.value=S.set.vol/100*.6;
+if(NEWS[k]){const M=fadeMaster(c,1),lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.value=2600;lp.Q.value=.4;M.connect(lp);lp.connect(gain);NEWS[k](mkH(c,M))}
+else{const G=fadeMaster(c,1.6);G.connect(gain);idbDo("get",k).then(b=>{if(!b||mg!==G)return;const u=URL.createObjectURL(b),a=new Audio(u);a.loop=true;c.createMediaElementSource(a).connect(G);a.play().catch(()=>{});fx.push(()=>{a.pause();URL.revokeObjectURL(u)})}).catch(()=>{})}}catch(e){}};
+
+theme();render();chk();document.addEventListener('visibilitychange',()=>{if(!document.hidden){chk();if(S.set.keep)wl()}});if(S.set.keep)wl();
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>

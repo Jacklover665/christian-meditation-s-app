@@ -1,0 +1,17 @@
+{
+  "name": "serenite-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Application mobile de méditation Sérénité",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "android:sync": "npm run build && cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3"
+  }
+}
